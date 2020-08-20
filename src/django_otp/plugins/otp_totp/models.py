@@ -25,6 +25,11 @@ class TOTPDevice(ThrottlingMixin, Device):
     correspond to the arguments to :func:`django_otp.oath.totp`. They all have
     sensible defaults, including the key, which is randomly generated.
 
+    .. attribute:: name
+
+        *CharField*: A human-readable name to help the user identify their
+        devices.
+
     .. attribute:: key
 
         *CharField*: A hex-encoded secret key of up to 40 bytes. (Default: 20
@@ -66,6 +71,7 @@ class TOTPDevice(ThrottlingMixin, Device):
         subsequently. (Default: -1)
 
     """
+    name = models.CharField(max_length=64, help_text="The human-readable name of this device.")
     key = models.CharField(max_length=80, validators=[key_validator], default=default_key, help_text="A hex-encoded secret key of up to 40 bytes.")
     step = models.PositiveSmallIntegerField(default=30, help_text="The time step in seconds.")
     t0 = models.BigIntegerField(default=0, help_text="The Unix time at which to begin counting steps.")
@@ -76,6 +82,12 @@ class TOTPDevice(ThrottlingMixin, Device):
 
     class Meta(Device.Meta):
         verbose_name = "TOTP device"
+
+    def get_private_name(self):
+        return self.name
+
+    def get_public_name(self):
+        return self.name
 
     @property
     def bin_key(self):

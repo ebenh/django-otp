@@ -24,6 +24,11 @@ class HOTPDevice(ThrottlingMixin, Device):
     correspond to the arguments to :func:`django_otp.oath.hotp`. They all have
     sensible defaults, including the key, which is randomly generated.
 
+    .. attribute:: name
+
+        *CharField*: A human-readable name to help the user identify their
+        devices.
+
     .. attribute:: key
 
         *CharField*: A hex-encoded secret key of up to 40 bytes. (Default: 20
@@ -44,6 +49,7 @@ class HOTPDevice(ThrottlingMixin, Device):
         *BigIntegerField*: The next counter value to expect. (Initial: 0)
 
     """
+    name = models.CharField(max_length=64, help_text="The human-readable name of this device.")
     key = models.CharField(max_length=80, validators=[key_validator], default=default_key, help_text="A hex-encoded secret key of up to 40 bytes.")
     digits = models.PositiveSmallIntegerField(choices=[(6, 6), (8, 8)], default=6, help_text="The number of digits to expect in a token.")
     tolerance = models.PositiveSmallIntegerField(default=5, help_text="The number of missed tokens to tolerate.")
@@ -51,6 +57,12 @@ class HOTPDevice(ThrottlingMixin, Device):
 
     class Meta(Device.Meta):
         verbose_name = "HOTP device"
+
+    def get_private_name(self):
+        return self.name
+
+    def get_public_name(self):
+        return self.name
 
     @property
     def bin_key(self):

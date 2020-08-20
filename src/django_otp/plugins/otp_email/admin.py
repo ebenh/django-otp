@@ -17,7 +17,7 @@ class EmailDeviceAdmin(admin.ModelAdmin):
     """
     fieldsets = [
         ('Identity', {
-            'fields': ['user', 'name', 'confirmed'],
+            'fields': ['user', 'confirmed'],
         }),
         ('Configuration', {
             'fields': ['email'],

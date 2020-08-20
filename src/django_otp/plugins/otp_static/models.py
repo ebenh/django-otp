@@ -19,11 +19,24 @@ class StaticDevice(ThrottlingMixin, Device):
     This model has no fields of its own, but serves as a container for
     :class:`StaticToken` objects.
 
+    .. attribute:: name
+
+        *CharField*: A human-readable name to help the user identify their
+        devices.
+
     .. attribute:: token_set
 
         The RelatedManager for our tokens.
 
     """
+    name = models.CharField(max_length=64, help_text="The human-readable name of this device.")
+
+    def get_private_name(self):
+        return self.name
+
+    def get_public_name(self):
+        return self.name
+
     def get_throttle_factor(self):
         return getattr(settings, 'OTP_STATIC_THROTTLE_FACTOR', 1)
 

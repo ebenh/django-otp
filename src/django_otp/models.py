@@ -54,11 +54,6 @@ class Device(models.Model):
         :setting:`AUTH_USER_MODEL` (:class:`~django.contrib.auth.models.User`
         by default).
 
-    .. attribute:: name
-
-        *CharField*: A human-readable name to help the user identify their
-        devices.
-
     .. attribute:: confirmed
 
         *BooleanField*: A boolean value that tells us whether this device has
@@ -72,7 +67,6 @@ class Device(models.Model):
         A :class:`~django_otp.models.DeviceManager`.
     """
     user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), help_text="The user that this device belongs to.", on_delete=models.CASCADE)
-    name = models.CharField(max_length=64, help_text="The human-readable name of this device.")
     confirmed = models.BooleanField(default=True, help_text="Is this device ready for use?")
 
     objects = DeviceManager()
@@ -86,10 +80,15 @@ class Device(models.Model):
         except ObjectDoesNotExist:
             user = None
 
-        return "{0} ({1})".format(self.name, user)
+        return "{0} ({1})".format(self.get_private_name(), user)
+
+    def get_private_name(self):
+        assert False
+        return ""
 
     def get_public_name(self):
-        return self.name
+        assert False
+        return ""
 
     @property
     def persistent_id(self):
@@ -156,6 +155,7 @@ class Device(models.Model):
             trap ``Exception`` and report it to the user.
         """
         return None
+
     generate_challenge.stub = True
 
     def verify_is_allowed(self):

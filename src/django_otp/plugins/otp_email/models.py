@@ -46,6 +46,9 @@ class EmailDevice(ThrottlingMixin, SideChannelDevice):
         help_text='Optional alternative email address to send tokens to'
     )
 
+    def get_private_name(self):
+        return self.email or self.user.email
+
     def get_public_name(self):
         return obscure_email(self.email or self.user.email)
 

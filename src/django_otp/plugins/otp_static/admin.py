@@ -16,6 +16,12 @@ class StaticDeviceAdmin(admin.ModelAdmin):
     :class:`~django.contrib.admin.ModelAdmin` for
     :class:`~django_otp.plugins.otp_static.models.StaticDevice`.
     """
+    list_display = ('user', 'name', 'confirmed')
+
+    """
+    :class:`~django.contrib.admin.ModelAdmin` for
+    :class:`~django_otp.plugins.otp_static.models.StaticDevice`.
+    """
     fieldsets = [
         ('Identity', {
             'fields': ['user', 'name', 'confirmed'],

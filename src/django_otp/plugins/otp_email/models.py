@@ -8,7 +8,7 @@ from django_otp.util import hex_validator, random_hex
 
 from .conf import settings
 
-from .util import obscure_email
+from .util import obfuscate_email
 
 
 def default_key():  # pragma: no cover
@@ -50,7 +50,7 @@ class EmailDevice(ThrottlingMixin, SideChannelDevice):
         return self.email or self.user.email
 
     def get_obfuscated_name(self):
-        return obscure_email(self.email or self.user.email)
+        return obfuscate_email(self.email or self.user.email)
 
     def get_throttle_factor(self):
         return settings.OTP_EMAIL_THROTTLE_FACTOR

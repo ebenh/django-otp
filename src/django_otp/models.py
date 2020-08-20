@@ -88,6 +88,9 @@ class Device(models.Model):
 
         return "{0} ({1})".format(self.name, user)
 
+    def get_public_name(self):
+        return self.name
+
     @property
     def persistent_id(self):
         return '{0}/{1}'.format(self.model_label(), self.id)

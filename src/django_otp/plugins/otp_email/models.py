@@ -8,6 +8,8 @@ from django_otp.util import hex_validator, random_hex
 
 from .conf import settings
 
+from .util import obscure_email
+
 
 def default_key():  # pragma: no cover
     """ Obsolete code here for migrations. """
@@ -43,6 +45,9 @@ class EmailDevice(ThrottlingMixin, SideChannelDevice):
         null=True,
         help_text='Optional alternative email address to send tokens to'
     )
+
+    def get_public_name(self):
+        return obscure_email(self.email or self.user.email)
 
     def get_throttle_factor(self):
         return settings.OTP_EMAIL_THROTTLE_FACTOR

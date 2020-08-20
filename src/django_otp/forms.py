@@ -158,7 +158,7 @@ class OTPAuthenticationFormMixin:
 
     @staticmethod
     def device_choices(user):
-        return list((d.persistent_id, d.name) for d in devices_for_user(user))
+        return list((d.persistent_id, d.get_public_name()) for d in devices_for_user(user))
 
 
 class OTPAuthenticationForm(OTPAuthenticationFormMixin, AuthenticationForm):

@@ -19,6 +19,7 @@ bumpversion = "*"
 qrcode = "*"
 
 [packages]
+tldextract = "*"
 
 [requires]
 python_version = "3.7"

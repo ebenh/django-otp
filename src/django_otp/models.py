@@ -80,13 +80,13 @@ class Device(models.Model):
         except ObjectDoesNotExist:
             user = None
 
-        return "{0} ({1})".format(self.get_private_name(), user)
+        return "{0} ({1})".format(self.get_name(), user)
 
-    def get_private_name(self):
+    def get_name(self):
         assert False
         return ""
 
-    def get_public_name(self):
+    def get_obfuscated_name(self):
         assert False
         return ""
 

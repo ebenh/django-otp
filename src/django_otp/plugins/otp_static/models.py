@@ -31,10 +31,10 @@ class StaticDevice(ThrottlingMixin, Device):
     """
     name = models.CharField(max_length=64, help_text="The human-readable name of this device.")
 
-    def get_private_name(self):
+    def get_name(self):
         return self.name
 
-    def get_public_name(self):
+    def get_obfuscated_name(self):
         return self.name
 
     def get_throttle_factor(self):

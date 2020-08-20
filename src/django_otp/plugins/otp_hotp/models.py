@@ -58,10 +58,10 @@ class HOTPDevice(ThrottlingMixin, Device):
     class Meta(Device.Meta):
         verbose_name = "HOTP device"
 
-    def get_private_name(self):
+    def get_name(self):
         return self.name
 
-    def get_public_name(self):
+    def get_obfuscated_name(self):
         return self.name
 
     @property

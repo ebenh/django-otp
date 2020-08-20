@@ -83,10 +83,20 @@ class Device(models.Model):
         return "{0} ({1})".format(self.get_name(), user)
 
     def get_name(self):
+        """
+        Returns the human-readable name for this device.
+
+        :rtype: string
+        """
         assert False
         return ""
 
     def get_obfuscated_name(self):
+        """
+        Returns the human-readable name for this device with sensitive information obfuscated.
+
+        :rtype: string
+        """
         assert False
         return ""
 
